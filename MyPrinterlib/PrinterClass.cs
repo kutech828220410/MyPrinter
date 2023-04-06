@@ -107,10 +107,21 @@ namespace MyPrinterlib
             pageSetupDialog.Document = printDocument;
             return pageSetupDialog.ShowDialog();
         }
-
-        public void Print(int numOfPage)
+        public void Print(PageSize pageSize)
+        {
+            Print(pageSize, 1);
+        }
+        public void Print(PageSize pageSize, int numOfPage)
         {
             this.numOfPage = numOfPage;
+            if (pageSize == PageSize.A4)
+            {
+                printDocument.DefaultPageSettings.PaperSize = new PaperSize("", 827, 1169);
+            }
+            else if (pageSize == PageSize.A4_reverse)
+            {
+                printDocument.DefaultPageSettings.PaperSize = new PaperSize("", 1169, 827);
+            }
             printDocument.Print();
         }
         public SheetClass GetSheetClass(int pageNum)
