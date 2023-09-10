@@ -107,6 +107,11 @@ namespace MyPrinterlib
             pageSetupDialog.Document = printDocument;
             return pageSetupDialog.ShowDialog();
         }
+        public void Print(List<SheetClass> sheetClasses, PageSize pageSize)
+        {
+            this.SheetClasses = sheetClasses;
+            this.Print(pageSize, sheetClasses.Count);
+        }
         public void Print(PageSize pageSize)
         {
             Print(pageSize, 1);
