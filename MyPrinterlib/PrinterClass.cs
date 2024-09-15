@@ -9,10 +9,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using MyOffice;
+using Basic;
 namespace MyPrinterlib
 {
     public class PrinterClass
     {
+        public string PrinterName = "";
         public enum PageSize
         {
             A4,
@@ -118,6 +120,11 @@ namespace MyPrinterlib
         }
         public void Print(PageSize pageSize, int numOfPage)
         {
+            if(this.PrinterName.StringIsEmpty())
+            {
+                printDocument.PrinterSettings.PrinterName = this.PrinterName;
+            }
+      
             this.numOfPage = numOfPage;
             if (pageSize == PageSize.A4)
             {
@@ -127,7 +134,14 @@ namespace MyPrinterlib
             {
                 printDocument.DefaultPageSettings.PaperSize = new PaperSize("", 1169, 827);
             }
-            printDocument.Print();
+            if (printDocument.PrinterSettings.IsValid)
+            {
+                printDocument.Print();
+            }
+            else
+            {
+                Console.WriteLine($"無法找到指定的印表機。 PrinterName : {this.PrinterName}");
+            }
         }
         public SheetClass GetSheetClass(int pageNum)
         {
